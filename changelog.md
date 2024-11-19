@@ -1,3 +1,6 @@
+# 0.6.21
+- Add support confluence token
+
 # 0.6.20
 
 - Support for Confluence Cloud option to remove HTML formatting.

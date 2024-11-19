@@ -101,11 +101,14 @@ class Backend(BaseBackend):
                                     ('space_key', 'title')])
         return options
 
-    def _connect(self, host: str, login: str, password: str, verify_ssl: bool) -> Confluence:
+    def _connect(self, host: str, login: str, password: str, token: str, verify_ssl: bool) -> Confluence:
         """Connect to Confluence server and test connection"""
         self.logger.debug(f'Trying to connect to confluence server at {host}')
         host = host.rstrip('/')
-        self.con = Confluence(host, login, password, verify_ssl=verify_ssl)
+        if token:
+            self.con = Confluence(host, token=token, verify_ssl=verify_ssl)
+        else:
+            self.con = Confluence(host, login, password, verify_ssl=verify_ssl)
         try:
             res = self.con.get('rest/api/space')
         except UnicodeEncodeError:
@@ -145,7 +148,8 @@ class Backend(BaseBackend):
                 msg += f"Please input login for {host}:\n"
                 login = input(msg)
             password = get_password_for_login(login)
-        return login, password
+
+        return login, password, self.options.get('token', '')
 
     def _build(self):
         '''
