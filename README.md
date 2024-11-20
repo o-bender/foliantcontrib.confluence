@@ -45,6 +45,7 @@ backend_config:
     host: 'https://my_confluence_server.org'
     login: user
     password: user_password
+    token: user_token
     id: 124443
     title: Title of the page
     space_key: "~user"
@@ -77,6 +78,9 @@ backend_config:
 
 `password`
 :   Password of the user. If the password is not supplied, it will be prompted during the build.
+
+`token`
+:   Confluence user token. If set, then a higher priority than the login-password.
 
 `id`
 :   ID of the page where the content will be uploaded. *Only for already existing pages*
